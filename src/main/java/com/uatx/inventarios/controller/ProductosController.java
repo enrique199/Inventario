@@ -17,11 +17,9 @@ public class ProductosController {
     @Autowired
     private ProductoService productoService;
 
-    @GetMapping("/guardar")
+    @PostMapping("/guardar")
     @ResponseBody
-    public Long guardarProducto(@RequestParam String nombre) {
-        ProductoDTO productoDTO = new ProductoDTO();
-        productoDTO.setNombre(nombre);
+    public Long guardarProducto(@RequestBody ProductoDTO productoDTO) {
         return productoService.store(productoDTO);
     }
 
@@ -41,5 +39,14 @@ public class ProductosController {
     @ResponseBody
     public String findByName(@PathVariable Long productoId) {
         return productoService.delete(productoId);
+    }
+
+    @GetMapping("/page/nuevo-producto")
+    public String redirectAltaProd(){
+        return "nuevo-producto";
+    }
+    @GetMapping("/page/productos")
+    public String redirectConsultaProd(){
+        return "consulta-productos";
     }
 }

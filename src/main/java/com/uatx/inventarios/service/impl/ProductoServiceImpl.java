@@ -2,7 +2,9 @@ package com.uatx.inventarios.service.impl;
 
 import com.uatx.inventarios.dto.ProductoDTO;
 import com.uatx.inventarios.exceptions.BusinessException;
+import com.uatx.inventarios.model.Imagen;
 import com.uatx.inventarios.model.Producto;
+import com.uatx.inventarios.repository.ImagenRepository;
 import com.uatx.inventarios.repository.ProductoRepository;
 import com.uatx.inventarios.service.ProductoService;
 import org.modelmapper.ModelMapper;
@@ -11,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,17 +25,27 @@ public class ProductoServiceImpl implements ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
 
+    @Autowired
+    private ImagenRepository imagenRepository;
+
     /**
      * Objeto para copiar valores de las propiedades de un objeto a otro
      */
     @Autowired
     private ModelMapper modelMapper;
 
+    public ProductoServiceImpl() {
+    }
+
     @Override
     public Long store(ProductoDTO productoDTO) {
-        Producto producto = new Producto();
-        producto.setNombre(productoDTO.getNombre());
+        Producto producto = modelMapper.map(productoDTO,Producto.class);
+        producto.setStock(0D);
+        producto.setFecha(new Date());
+        Imagen imagen = modelMapper.map(productoDTO.getImagen(),Imagen.class);
 
+        imagenRepository.save(imagen);
+        producto.setImagen(imagen);
         productoRepository.save(producto);
 
         return producto.getId();
@@ -72,6 +86,13 @@ public class ProductoServiceImpl implements ProductoService {
             }
 
         }
+
+    }
+    @Override
+    public List<ProductoDTO> findProdWithImage(){
+        List<Producto> productos = productoRepository.findProductosFetchImagen();
+        List<ProductoDTO> productoDTO = trasnformToListDTO(productos);
+        return productoDTO;
 
     }
 
