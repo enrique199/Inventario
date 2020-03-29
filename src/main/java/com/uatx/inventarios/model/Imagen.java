@@ -14,7 +14,7 @@ public class Imagen {
     private String nombre;
 
     @Column(name = "mime_type", length = 50)
-    private String mimeTipe;
+    private String mimeType;
 
     @Column(name = "datos", length = 5_000_000)
     private String dataBase64;
@@ -31,12 +31,12 @@ public class Imagen {
         this.nombre = nombre;
     }
 
-    public String getMimeTipe() {
-        return mimeTipe;
+    public String getMimeType() {
+        return mimeType;
     }
 
-    public void setMimeTipe(String mimeTipe) {
-        this.mimeTipe = mimeTipe;
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
 
     public String getDataBase64() {

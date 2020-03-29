@@ -43,7 +43,7 @@ public class ProductosController {
 
     @GetMapping("/page/nuevo-producto")
     public String redirectAltaProd(){
-        return "nuevo-producto";
+        return "nuevo-produto";
     }
     @GetMapping("/page/productos")
     public String redirectConsultaProd(){

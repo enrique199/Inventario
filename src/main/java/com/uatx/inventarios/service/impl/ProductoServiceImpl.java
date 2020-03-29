@@ -91,8 +91,9 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public List<ProductoDTO> findProdWithImage(){
         List<Producto> productos = productoRepository.findProductosFetchImagen();
-        List<ProductoDTO> productoDTO = trasnformToListDTO(productos);
-        return productoDTO;
+        List<ProductoDTO> produtosDTO = trasnformToListDTO(productos);
+        return produtosDTO;
+
 
     }
 
